@@ -10,7 +10,12 @@ const formatTime = (s: number) => {
   return `${m}:${sec}`;
 };
 
-const VideoPlayer = () => {
+interface VideoPlayerProps {
+  videoUrl?: string | null;
+  posterUrl?: string | null;
+}
+
+const VideoPlayer = ({ videoUrl, posterUrl }: VideoPlayerProps) => {
   const ref = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -84,12 +89,13 @@ const VideoPlayer = () => {
     <div ref={containerRef} className="relative w-full aspect-video bg-black rounded-lg overflow-hidden group btn-glow-soft">
       <video
         ref={ref}
-        poster={poster}
+        poster={posterUrl ?? poster}
         className="w-full h-full object-contain bg-black"
         onClick={toggle}
         playsInline
+        controls={false}
       >
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+        <source src={videoUrl ?? "https://www.w3schools.com/html/mov_bbb.mp4"} type="video/mp4" />
       </video>
 
       {!playing && (

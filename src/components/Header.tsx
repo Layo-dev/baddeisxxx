@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Search, Menu, X, User, Upload } from "lucide-react";
+import { Search, Menu, X, User } from "lucide-react";
+import { Link } from "react-router-dom";
 import mascot from "@/assets/baddies-mascot.png";
 
 const navItems = ["Videos", "Categories", "Tags", "Porn Directory"];
@@ -11,7 +12,7 @@ const Header = () => {
     <header className="relative z-30 bg-gradient-header border-b border-primary/20">
       <div className="container flex items-center justify-between gap-4 py-4">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 shrink-0">
+        <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src={mascot}
             alt="Baddies mascot logo"
@@ -22,7 +23,7 @@ const Header = () => {
           <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white text-glow">
             BADDIES
           </span>
-        </a>
+        </Link>
 
         {/* Search (desktop) */}
         <div className="hidden md:flex flex-1 max-w-md items-center gap-2 text-muted-foreground">
@@ -73,11 +74,6 @@ const Header = () => {
                 </a>
               </li>
             ))}
-            <li>
-              <button className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 text-white btn-glow hover:opacity-95 transition">
-                UPLOAD <Upload className="h-4 w-4" />
-              </button>
-            </li>
           </ul>
         </nav>
       )}

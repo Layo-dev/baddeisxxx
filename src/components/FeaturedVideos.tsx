@@ -1,4 +1,6 @@
 import VideoCard from "./VideoCard";
+import { useQuery } from "@tanstack/react-query";
+import { listVideos } from "@/lib/videos";
 
 const categories = [
   "Amateur Baddies", "Black Baddies", "Sextapes", "Teen Baddies", "Big Tits",
@@ -8,25 +10,15 @@ const categories = [
   "Boy-Girl-Girl",
 ];
 
-const videos = [
-  { title: "Shots", duration: "5:14", views: "6", rating: "5" },
-  { title: "RC Tape", duration: "2:24", views: "14", rating: "5" },
-  { title: "3643", duration: "7:11", views: "0", rating: "5" },
-  { title: "Fridge Challenge", duration: "5:55", views: "624", rating: "5" },
-  { title: "Deep", duration: "1:33", views: "513", rating: "5" },
-  { title: "Love", duration: "12:30", views: "358", rating: "5" },
-  { title: "Brandi Tape", duration: "6:05", views: "1.0K", rating: "5" },
-  { title: "Arch", duration: "2:25", views: "439", rating: "5" },
-  { title: "Bussin", duration: "2:13", views: "407", rating: "5" },
-  { title: "Mx", duration: "5:33", views: "804", rating: "5" },
-  { title: "Heaven", duration: "2:53", views: "859", rating: "5" },
-  { title: "Lord Knows", duration: "22:44", views: "516", rating: "5" },
-];
-
 const showOptions = [30, 60, 90, 120];
 const pages = [1, 2, 3, 4, 5];
 
 const FeaturedVideos = () => {
+  const { data: videos = [], isLoading, isError, error } = useQuery({
+    queryKey: ["videos", "ready"],
+    queryFn: () => listVideos("ready"),
+  });
+
   return (
     <section className="container py-10 sm:py-16">
       <h2 className="text-center text-4xl sm:text-6xl font-bold text-white text-glow tracking-tight">
@@ -43,8 +35,23 @@ const FeaturedVideos = () => {
 
       {/* Grid */}
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {videos.map((v, i) => (
-          <VideoCard key={i} {...v} />
+        {isLoading && <p className="text-muted-foreground">Loading videos...</p>}
+        {isError && (
+          <p className="text-destructive">Could not load videos: {(error as Error).message}</p>
+        )}
+        {!isLoading && !isError && videos.length === 0 && (
+          <p className="text-muted-foreground">No videos are ready yet.</p>
+        )}
+        {videos.map((video) => (
+          <VideoCard
+            key={video.id}
+            slug={video.slug}
+            title={video.title}
+            durationSeconds={video.duration_seconds}
+            views={video.views}
+            rating={video.rating}
+            thumbnailUrl={video.thumbnail_url}
+          />
         ))}
       </div>
 
@@ -85,7 +92,7 @@ const FeaturedVideos = () => {
             ›
           </button>
         </div>
-        <div className="text-white font-bold">20841 videos</div>
+        <div className="text-white font-bold">{videos.length} videos</div>
       </div>
     </section>
   );
