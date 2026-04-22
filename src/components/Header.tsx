@@ -1,0 +1,88 @@
+import { useState } from "react";
+import { Search, Menu, X, User, Upload } from "lucide-react";
+import mascot from "@/assets/baddies-mascot.png";
+
+const navItems = ["Videos", "Categories", "Tags", "Porn Directory"];
+
+const Header = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className="relative z-30 bg-gradient-header border-b border-primary/20">
+      <div className="container flex items-center justify-between gap-4 py-4">
+        {/* Logo */}
+        <a href="/" className="flex items-center gap-2 shrink-0">
+          <img
+            src={mascot}
+            alt="Baddies mascot logo"
+            width={56}
+            height={56}
+            className="h-12 w-12 sm:h-14 sm:w-14 drop-shadow-[0_0_15px_hsl(var(--primary)/0.6)]"
+          />
+          <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white text-glow">
+            BADDIES
+          </span>
+        </a>
+
+        {/* Search (desktop) */}
+        <div className="hidden md:flex flex-1 max-w-md items-center gap-2 text-muted-foreground">
+          <Search className="h-5 w-5" />
+          <input
+            type="search"
+            placeholder="SEARCH"
+            className="w-full bg-transparent border-none outline-none text-base font-bold tracking-wider placeholder:text-muted-foreground"
+          />
+        </div>
+
+        {/* Right actions */}
+        <div className="flex items-center gap-3">
+          <button
+            aria-label="Account"
+            className="h-10 w-10 rounded-full bg-gradient-purple grid place-items-center btn-glow-soft hover:btn-glow transition-shadow"
+          >
+            <User className="h-5 w-5 text-white" />
+          </button>
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className="h-10 w-10 grid place-items-center text-white hover:text-primary transition-colors"
+          >
+            {open ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile search */}
+      <div className="container md:hidden pb-3 flex items-center gap-2 text-muted-foreground">
+        <Search className="h-5 w-5" />
+        <input
+          type="search"
+          placeholder="SEARCH"
+          className="w-full bg-transparent border-none outline-none text-base font-bold tracking-wider placeholder:text-muted-foreground"
+        />
+      </div>
+
+      {/* Slide-down menu */}
+      {open && (
+        <nav className="border-t border-primary/20 bg-gradient-header animate-in fade-in slide-in-from-top-2 duration-200">
+          <ul className="container py-6 flex flex-col items-center gap-5 text-white font-bold tracking-wider">
+            {navItems.map((item) => (
+              <li key={item}>
+                <a href="#" className="hover:text-primary transition-colors">
+                  {item.toUpperCase()}
+                </a>
+              </li>
+            ))}
+            <li>
+              <button className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 text-white btn-glow hover:opacity-95 transition">
+                UPLOAD <Upload className="h-4 w-4" />
+              </button>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
+  );
+};
+
+export default Header;
