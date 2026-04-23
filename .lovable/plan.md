@@ -1,38 +1,28 @@
 
 
-## Fix: Use Bunny HLS for playback
+## Plan
 
-**Root cause:** `playback_url` points to `https://{cdn}/{guid}/play_720p.mp4`. Bunny only generates that file if MP4 fallback is enabled AND 720p was encoded. Shorter, lower-resolution, or vertical videos (and libraries without MP4 fallback) won't have it → playback fails. Bunny's HLS playlist (`playlist.m3u8`) is always available and adapts to whatever encodes exist.
+### Task 1 — Full page reload on video card clicks
+- Edit `src/components/VideoCard.tsx`: replace the React Router `<Link to={...}>` with a plain `<a href={...}>`. This causes a real browser navigation, so the new page starts at the top automatically (no scroll-restoration logic needed).
+- No changes to routes — React Router still handles the `/video/:slug` route after the reload.
 
-**Fix:** Switch playback URL to HLS and add `hls.js` to the custom player (Safari plays HLS natively; Chrome/Firefox/Edge need hls.js). Keep all existing custom controls.
+### Task 2 — Remove video placeholder image everywhere and delete the file
+- Delete `src/assets/video-placeholder.jpg`.
+- Edit `src/components/video/VideoPlayer.tsx`:
+  - Remove `import poster from "@/assets/video-placeholder.jpg"`.
+  - Remove the `activePoster` fallback. Use only `posterUrl` (real Bunny thumbnail). If absent, render no poster image and show a plain black background behind the play button.
+- Edit `src/components/VideoCard.tsx`:
+  - Remove `import poster from "@/assets/video-placeholder.jpg"`.
+  - For the thumbnail `<img>`, use `thumbnailUrl` only. If missing, render a black `aspect-video` box (no broken image, no placeholder asset).
 
-### Changes
-
-1. **`supabase/functions/_shared/video-utils.ts`**
-   - Change `buildPlaybackUrl` to return `https://{cdnHost}/{bunnyVideoId}/playlist.m3u8`.
-
-2. **Backfill existing rows** (migration)
-   - Update `videos.playback_url` for all `status = 'ready'` rows: replace `/play_720p.mp4` (and any other `play_*.mp4`) with `/playlist.m3u8`.
-
-3. **`src/components/video/VideoPlayer.tsx`**
-   - Add `hls.js` dependency.
-   - In the URL-change effect:
-     - If URL ends with `.m3u8` and `Hls.isSupported()` → create `Hls` instance, `loadSource`, `attachMedia`, store on ref, destroy on cleanup / URL change.
-     - Else if `video.canPlayType('application/vnd.apple.mpeg-url')` is truthy (Safari/iOS) → set `video.src` directly.
-     - Else (non-HLS URL like legacy `.mp4`) → keep current `<source>` behavior so old data still works.
-   - Add minimal HLS error handling (network → `startLoad`, media → `recoverMediaError`, fatal other → destroy).
-   - Keep all existing UI: poster, play/pause, seek, volume, fullscreen, glow.
-
-4. **No changes** to `create-video` (already calls `buildPlaybackUrl`, gets HLS automatically) or `sync-video-status` (same).
-
-### Why this works
-- `playlist.m3u8` is generated for every Bunny Stream video regardless of MP4 fallback settings or source resolution.
-- HLS adapts to available renditions, so vertical/low-res videos play.
-- Existing `.mp4` fallback path is preserved so nothing regresses.
+### Task 3 — Smaller, mobile-friendly center play button on the video player
+- Edit `src/components/video/VideoPlayer.tsx`: change the center play button from `h-20 w-20` with `h-9 w-9` icon to a responsive size:
+  - Button: `h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20`
+  - Icon: `h-5 w-5 sm:h-7 sm:w-7 md:h-9 md:w-9`
+- Keeps the purple gradient + glow styling; only the dimensions change.
 
 ### Files touched
-- edit `supabase/functions/_shared/video-utils.ts`
+- delete `src/assets/video-placeholder.jpg`
+- edit `src/components/VideoCard.tsx`
 - edit `src/components/video/VideoPlayer.tsx`
-- add `package.json` dep: `hls.js` (+ `@types/hls.js` if needed)
-- add migration to backfill `playback_url` for existing ready videos
 
