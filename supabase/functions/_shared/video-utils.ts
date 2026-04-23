@@ -24,7 +24,7 @@ export const buildPlaybackUrl = (cdnHost: string | undefined, bunnyVideoId: stri
     return null;
   }
 
-  return `https://${cdnHost}/${bunnyVideoId}/play_720p.mp4`;
+  return `https://${cdnHost}/${bunnyVideoId}/playlist.m3u8`;
 };
 
 export const buildThumbnailUrl = (
