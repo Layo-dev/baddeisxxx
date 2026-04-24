@@ -82,3 +82,27 @@ export const incrementVideoView = async (videoId: string): Promise<void> => {
     // Best-effort; never break playback.
   }
 };
+
+export interface VideoCategory {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export const listVideoCategories = async (videoId: string): Promise<VideoCategory[]> => {
+  const client = ensureSupabase();
+  const { data, error } = await client
+    .from("video_categories")
+    .select("categories:category_id ( id, name, slug )")
+    .eq("video_id", videoId);
+
+  if (error) throw new Error(error.message);
+
+  return ((data ?? []) as Array<{ categories: VideoCategory | VideoCategory[] | null }>)
+    .flatMap((row) => {
+      const c = row.categories;
+      if (!c) return [];
+      return Array.isArray(c) ? c : [c];
+    })
+    .filter((c): c is VideoCategory => Boolean(c?.id && c?.name));
+};
