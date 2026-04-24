@@ -58,7 +58,7 @@ const VideoPage = () => {
             onFirstPlay={video?.id ? () => incrementVideoView(video.id) : undefined}
           />
           <VideoActions />
-          <VideoMeta />
+          <VideoMeta videoId={video?.id} />
           <VideoComments />
         </section>
 
