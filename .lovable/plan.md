@@ -1,50 +1,76 @@
-## Three additions
+## Task 1 — Legal Pages
 
-### 1. Age gate modal (18+ confirmation)
+Create 4 legal pages, all using `Header` + `Footer` and a shared layout look matching the uploaded screenshots (dark bg, purple left-bar accent on title, white-glow heading, body in muted text).
 
-Create `src/components/AgeGate.tsx` — a full-screen modal styled to our dark/purple brand (inspired by reference). On first load, check `localStorage.getItem("age_verified")`; if not set, show the gate over the entire app.
+**New shared component:** `src/components/legal/LegalLayout.tsx`
+- Props: `title`, `children`
+- Renders: page title with purple `border-l-4 border-primary pl-4` accent + section heading style + `prose`-like spacing for paragraphs.
 
-- Brand-styled card: site logo/wordmark, headline "This is an adult website", short notice copy, two buttons:
-  - "I am 18 or older — Enter" (gradient-purple, `btn-glow`) → sets `localStorage.age_verified = "1"` and closes
-  - "I am under 18 — Exit" (outline) → redirects to `https://www.google.com`
-- Footer line with terms link.
-- Mount in `src/App.tsx` above `<BrowserRouter>` so it appears on every route.
-- No backend yet — purely frontend gate (note in code: enforce server-side later).
+**New pages:**
+1. `src/pages/PrivacyPolicyPage.tsx` → `/privacy-policy`  
+   Standard adult-site privacy policy: data we collect (cookies, IP, analytics), how we use it, third parties (Bunny CDN, Supabase), cookies, user rights (GDPR/CCPA), contact.
+2. `src/pages/DmcaPage.tsx` → `/dmca`  
+   Content modeled on the second uploaded screenshot: Legal Disclaimer, How to File a DMCA Notice (required elements), Counter-Notification Procedures, Repeat Infringer Policy, contact email.
+3. `src/pages/TermsOfServicePage.tsx` → `/terms-of-service`  
+   Sections: Eligibility (must be 18+), Account responsibility, Acceptable Use (no illegal content, no copyright violations, no scraping/automated abuse, no harassment), Content ownership & license, Termination, Disclaimers, Governing Law.
+4. `src/pages/Compliance2257Page.tsx` → `/2257`  
+   Content modeled on the first uploaded screenshot — 18 U.S.C. 2257 Record-Keeping Requirements Compliance Statement.
 
-### 2. Quality selector in VideoPlayer
+**Routing — `src/App.tsx`:** add 4 routes above the `*` catch-all.
 
-Extend `src/components/video/VideoPlayer.tsx` to expose HLS quality levels via the existing `Settings` (gear) button.
+**Footer — `src/components/Footer.tsx`:** wire `secondaryLinks` to real `<Link>`s:
+- Privacy Policy → `/privacy-policy`
+- DMCA → `/dmca`
+- Legal → `/terms-of-service`
+- Add a "18 U.S.C. 2257" link → `/2257`
+- Replace anchor tags with react-router `Link` so navigation is SPA.
 
-- After `hls.on(Hls.Events.MANIFEST_PARSED)`, read `hls.levels` and store `[{ height, index }]` in state, plus `currentLevel` (-1 = auto).
-- Click gear → small popover (use existing `Popover` from `components/ui/popover`) anchored above the controls bar, listing:
-  - `Auto` (default, highlighted when `hls.currentLevel === -1` or set to -1)
-  - Each level sorted desc by `height` shown as `1080p`, `720p`, `480p`, `360p` with an `HD` badge for ≥720 (matches reference screenshot styling — pill badge, gradient highlight on active row).
-- Selecting a row sets `hls.currentLevel = index` (or -1 for auto) and closes popover.
-- Hidden / disabled when `hls.levels.length <= 1` or when not using HLS (Safari native fallback).
-- Keep mp4 path unchanged.
+---
 
-### 3. Category videos page (3-2-1 responsive grid)
+## Task 2 — Home Categories Filter + Skeleton
 
-New route `src/pages/CategoryVideosPage.tsx` at path `/categories/:slug` (matches existing `CategoryCard` link).
+Edit `src/components/FeaturedVideos.tsx`:
 
-- Title: category name in the same big uppercase glow style.
-- Sort tabs row: `MOST RECENT`, `MOST VIEWED`, `BEST RATED` (visual only for now, MOST RECENT active by default; tab state stored locally and passed as `sort` query param).
-- Right-aligned `ALL TIME ▼` placeholder dropdown (visual only).
-- Grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8` (3-2-1 responsive) using existing `VideoCard`.
-- Loading skeletons + empty / error states matching `CategoriesPage` patterns.
+**State**
+- Add `selectedCategory: string` (default `"all"`, stores slug; `"all"` means no filter).
+- Add `expanded: boolean` (default `false`) — controls collapsed (first row only) vs full list.
 
-Data fetching in new helper `getVideosByCategory(slug, sort?)` in `src/lib/videos.ts`:
+**Categories source**
+- Replace the hardcoded `CATEGORY_CHIPS` array with a live `useQuery(['categories'], listCategories)` call (`src/lib/categories.ts` already exists). Keep "All" as a synthetic first chip (UI-only, not in DB).
+- Show a skeleton row (8 chip-shaped Skeletons) while categories are loading.
 
-- Calls `supabase.functions.invoke("get-videos-by-category", { body: { slug, sort } })`.
-- If the function isn't deployed yet (404 / non-2xx), fall back to a direct query: join `categories` (by slug) → `video_categories` → `videos` (status `ready`) ordered by `created_at desc` (or views / rating depending on sort). This keeps the page working until the edge function is live.
-- Returns `VideoRecord[]`.
+**Chip behavior**
+- Clicking a chip sets `selectedCategory` and resets `page` to 1.
+- Active chip: `bg-gradient-purple text-white btn-glow`; inactive uses existing `chip` class.
+- Collapsed mode: render only the first ~8 chips (plus "All"); show `"Show All Categories"` toggle.
+- Expanded mode: render all chips; toggle now reads `"Hide Categories"`.
 
-Register the route in `src/App.tsx` above the catch-all.
+**Data fetching**
+- When `selectedCategory === "all"`: keep existing `fetchVideos(page, limit, sort)` call against `list-videos` edge function.
+- When a specific category is selected: call `getVideosByCategory(slug, sort)` from `src/lib/videos.ts` (already implemented). Map its `VideoRecord[]` into the same shape `VideoCard` consumes. For the category branch, paginate client-side (slice by `page`/`limit`) and compute `totalCount`/`totalPages` locally so the existing pagination UI still works.
+- Use a single `useQuery` whose `queryKey` includes `selectedCategory` so cache is keyed correctly.
 
-### Files
+**Skeleton UI for videos**
+- Replace `"Loading videos…"` text with a grid of `VideoCardSkeleton` items (count = `limit`, capped at e.g. 12 for first paint).
+- New component `src/components/VideoCardSkeleton.tsx`:
+  - `aspect-video Skeleton` for thumbnail
+  - `h-4 w-3/4` Skeleton for title (centered)
+  - Two small Skeletons in a row for views/rating
+- Show skeletons when `isLoading` is true (initial fetch, no cached data). On `isFetching` with prior data, keep the existing 50% opacity behavior.
 
-- create `src/components/AgeGate.tsx`
-- create `src/pages/CategoryVideosPage.tsx`
-- edit `src/App.tsx` (mount AgeGate, add `/categories/:slug` route)
-- edit `src/components/video/VideoPlayer.tsx` (HLS levels + quality popover)
-- edit `src/lib/videos.ts` (add `getVideosByCategory`)
+---
+
+## Files
+
+**Create**
+- `src/components/legal/LegalLayout.tsx`
+- `src/pages/PrivacyPolicyPage.tsx`
+- `src/pages/DmcaPage.tsx`
+- `src/pages/TermsOfServicePage.tsx`
+- `src/pages/Compliance2257Page.tsx`
+- `src/components/VideoCardSkeleton.tsx`
+
+**Edit**
+- `src/App.tsx` — register 4 legal routes
+- `src/components/Footer.tsx` — real links via `react-router-dom` `Link`, add 2257 link
+- `src/components/FeaturedVideos.tsx` — live categories, All/category filter, expand/collapse chips, skeleton loading state
