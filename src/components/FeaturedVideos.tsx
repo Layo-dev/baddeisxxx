@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { listVideos } from "@/lib/videos";
 
 const categories = [
-  "Amateur Baddies", "Black Baddies", "Sextapes", "Teen Baddies", "Big Tits",
+  "All", "Amateur Baddies", "Black Baddies", "Sextapes", "Teen Baddies", "Big Tits",
   "Latina vs BBC", "Black on Black", "Blowjob", "Big Ass", "Latina Baddies",
   "BBW Baddies", "Strippers", "PAWG vs BBC", "Interracial", "PAWG Baddies",
   "White on White", "White on Black", "POV", "Threesome", "Boy-Boy-Girl",
