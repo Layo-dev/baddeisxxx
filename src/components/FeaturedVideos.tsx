@@ -180,7 +180,7 @@ const FeaturedVideos = () => {
 
   return (
     <section className="container py-10 sm:py-16">
-      <h2 className="text-center text-4xl sm:text-6xl font-bold text-white text-glow tracking-tight">
+      <h2 className="text-center text-4xl sm:text-6xl font-bold text-white tracking-tight">
         FEATURED VIDEOS
       </h2>
 
@@ -199,7 +199,7 @@ const FeaturedVideos = () => {
                   onClick={() => handleCategoryChange(c.slug)}
                   className={
                     active
-                      ? "chip bg-gradient-purple text-white border-transparent btn-glow"
+                      ? "chip bg-primary text-white border-primary"
                       : "chip"
                   }
                 >

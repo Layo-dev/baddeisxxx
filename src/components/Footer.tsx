@@ -35,7 +35,7 @@ const Footer = () => {
             loading="lazy"
             className="h-14 w-14 drop-shadow-[0_0_18px_hsl(var(--primary)/0.55)]"
           />*/}
-          <span className="text-3xl font-bold text-white text-glow"> WILD BADDIES</span>
+          <span className="text-3xl font-bold text-white"> WILD BADDIES</span>
         {/*</a>*/}
 
         <nav className="flex flex-wrap justify-center gap-6 text-white font-bold tracking-wider">

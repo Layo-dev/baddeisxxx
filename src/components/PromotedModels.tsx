@@ -24,7 +24,7 @@ const PromotedModels = () => {
 
   return (
     <section className="container py-10 sm:py-16">
-      <h2 className="text-center text-3xl sm:text-4xl font-bold text-white text-glow tracking-tight">
+      <h2 className="text-center text-3xl sm:text-4xl font-bold text-white  tracking-tight">
         PROMOTED MODELS
       </h2>
 
@@ -32,7 +32,7 @@ const PromotedModels = () => {
         <button
           onClick={() => scroll("left")}
           aria-label="Previous"
-          className="hidden md:grid absolute -left-2 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full border-2 border-primary text-primary bg-background/40 backdrop-blur hover:bg-primary hover:text-white transition btn-glow-soft z-10"
+          className="hidden md:grid absolute -left-2 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full border-2 border-primary text-primary bg-background/40 backdrop-blur hover:bg-primary hover:text-white transition z-10"
         >
           <ChevronLeft className="h-6 w-6" />
         </button>
@@ -68,7 +68,7 @@ const PromotedModels = () => {
         <button
           onClick={() => scroll("right")}
           aria-label="Next"
-          className="hidden md:grid absolute -right-2 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full border-2 border-primary text-primary bg-background/40 backdrop-blur hover:bg-primary hover:text-white transition btn-glow-soft z-10"
+          className="hidden md:grid absolute -right-2 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full border-2 border-primary text-primary bg-background/40 backdrop-blur hover:bg-primary hover:text-white transition z-10"
         >
           <ChevronRight className="h-6 w-6" />
         </button>

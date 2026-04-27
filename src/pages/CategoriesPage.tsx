@@ -33,7 +33,7 @@ const CategoriesPage = () => {
       <Header />
       <main>
         <section className="container py-10 sm:py-16">
-          <h1 className="text-center text-4xl sm:text-6xl font-bold uppercase text-white text-glow tracking-tight">
+          <h1 className="text-center text-4xl sm:text-6xl font-bold uppercase text-white  tracking-tight">
             Categories
           </h1>
 

@@ -25,7 +25,7 @@ const Header = () => {
             height={56}
             className="h-12 w-12 sm:h-14 sm:w-14 drop-shadow-[0_0_15px_hsl(var(--primary)/0.6)]"
           /> */}
-          <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white text-glow">
+          <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white">
             WILD BADDIES
           </span>
         </Link>
@@ -44,7 +44,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <button
             aria-label="Account"
-            className="h-10 w-10 rounded-full bg-gradient-purple grid place-items-center btn-glow-soft hover:btn-glow transition-shadow"
+            className="h-10 w-10 rounded-full bg-gradient-purple grid place-items-center  transition-shadow"
           >
             <User className="h-5 w-5 text-white" />
           </button>
@@ -87,7 +87,7 @@ const Header = () => {
               <Link
                 to="/upload"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 uppercase tracking-widest text-white btn-glow hover:opacity-95 transition-opacity"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 uppercase tracking-widest text-white  hover:opacity-95 transition-opacity"
               >
                 Upload
                 <Upload className="h-4 w-4" />
