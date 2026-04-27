@@ -10,6 +10,10 @@ import UploadPage from "./pages/UploadPage.tsx";
 import CategoriesPage from "./pages/CategoriesPage.tsx";
 import CategoryVideosPage from "./pages/CategoryVideosPage.tsx";
 import AgeGate from "./components/AgeGate.tsx";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import DmcaPage from "./pages/DmcaPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import Compliance2257Page from "./pages/Compliance2257Page";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +32,10 @@ const App = () => (
           <Route path="/categories/:slug" element={<CategoryVideosPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/dmca" element={<DmcaPage />} />
+          <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+          <Route path="/2257" element={<Compliance2257Page />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

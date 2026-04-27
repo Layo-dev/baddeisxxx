@@ -8,7 +8,7 @@ const primaryLinks: { label: string; to: string }[] = [
 ];
 
 const secondaryLinks: { label: string; to: string }[] = [
-  { label: "Support", to: "/" },
+  /*{ label: "Support", to: "/" },*/
   { label: "Privacy Policy", to: "/privacy-policy" },
   { label: "DMCA", to: "/dmca" },
   { label: "Legal", to: "/terms-of-service" },
