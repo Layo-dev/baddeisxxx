@@ -14,6 +14,8 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import DmcaPage from "./pages/DmcaPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import Compliance2257Page from "./pages/Compliance2257Page";
+import JuicyPopunder from "./components/JuicyPopunder.tsx";
+
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,7 @@ const App = () => (
       <Sonner />
       <AgeGate />
       <BrowserRouter>
+      <JuicyPopunder />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/video/:slug" element={<VideoPage />} />
