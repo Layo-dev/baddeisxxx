@@ -32,7 +32,7 @@ const VideoPage = () => {
       <Header />
       <main>
         <section className="container pt-6 sm:pt-10 pb-4">
-          <h1 className="text-3xl sm:text-5xl font-bold text-white uppercase text-glow tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold text-white uppercase tracking-tight">
             {title}
           </h1>
           <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
