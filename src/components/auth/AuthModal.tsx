@@ -219,14 +219,14 @@ const SignupForm = ({
       </button>
     </p>
 
-    <div className="pt-3 border-t border-border text-center">
+    {/*<div className="pt-3 border-t border-border text-center">
       <a
         href="#"
         className="text-sm text-primary hover:opacity-90 transition-opacity"
       >
         Resend confirmation email
       </a>
-    </div>
+    </div>*/}
   </form>
   );
 };
