@@ -8,8 +8,14 @@ import { uploadVideo } from "@/lib/videos";
 import { listCategories } from "@/lib/categories";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 const UploadPage = () => {
+  const { isAuthenticated, isAdmin, isLoading } = useAuth();
+  if (isLoading) return null;
+  if (!isAuthenticated || !isAdmin) return <Navigate to="/" replace />;
+
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -91,7 +97,7 @@ const UploadPage = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Type your title"
                   disabled={isPending}
-                  className="w-full rounded-md border border-primary/40 bg-secondary/30 px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/40 disabled:opacity-50"
+                  className="w-full rounded-md border border-primary/40 bg-secondary/30 px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                   required
                 />
               </label>
@@ -127,7 +133,7 @@ const UploadPage = () => {
                           <label
                             key={cat.id}
                             data-state={checked ? "checked" : "unchecked"}
-                            className="flex items-center gap-2 rounded-md border border-primary/40 bg-secondary/30 px-3 py-2.5 cursor-pointer transition-colors hover:border-primary hover:bg-primary/10 data-[state=checked]:border-primary data-[state=checked]:bg-primary/15"
+                            className="flex items-center gap-2 rounded-md border border-primary/40 bg-secondary/30 px-3 py-2.5 cursor-pointer transition-colors hover:border-primary hover:bg-primary/10"
                           >
                             <Checkbox
                               checked={checked}

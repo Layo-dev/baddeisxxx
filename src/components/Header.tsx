@@ -18,7 +18,7 @@ const Header = () => {
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode>("login");
   const [accountOpen, setAccountOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const openAuth = (mode: AuthMode) => {
@@ -168,16 +168,18 @@ const Header = () => {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                to="/upload"
-                onClick={() => setOpen(false)}
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 uppercase tracking-widest text-white  hover:opacity-95 transition-opacity"
-              >
-                Upload
-                <Upload className="h-4 w-4" />
-              </Link>
-            </li>
+            {isAuthenticated && isAdmin && (
+              <li>
+                <Link
+                  to="/upload"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-purple px-8 py-3 uppercase tracking-widest text-white  hover:opacity-95 transition-opacity"
+                >
+                  Upload
+                  <Upload className="h-4 w-4" />
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       )}
