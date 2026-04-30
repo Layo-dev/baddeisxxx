@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import FeaturedVideos from "@/components/FeaturedVideos";
 import PromotedModels from "@/components/PromotedModels";
 import Footer from "@/components/Footer";
+import ExoSliderAd from "@/components/ExoSliderAd";
 //import AdBanner from "@/components/AdBanner";
 
 const Index = () => {
@@ -12,6 +13,7 @@ const Index = () => {
       <main>
         <h1 className="sr-only">Baddies — Featured Videos and Promoted Models</h1>
         <FeaturedVideos />
+        <ExoSliderAd />
         <PromotedModels />
       </main>
       <Footer />
