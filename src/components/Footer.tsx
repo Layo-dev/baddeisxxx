@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import mascot from "@/assets/baddies-mascot.png";
+/*import { Link } from "react-router-dom";*/ // TODO: Add back in when latest changes are merged
+/*import mascot from "@/assets/baddies-mascot.png";*/ // Deleting soon
 
 const primaryLinks: { label: string; to: string }[] = [
   { label: "Videos", to: "/" },
@@ -40,17 +40,17 @@ const Footer = () => {
 
         <nav className="flex flex-wrap justify-center gap-6 text-white font-bold tracking-wider">
           {primaryLinks.map((l) => (
-            <Link key={l.label} to={l.to} className="hover:text-primary transition-colors">
+            <a key={l.label} href={l.to} className="hover:text-primary transition-colors">
               {l.label.toUpperCase()}
-            </Link>
+            </a>
           ))}
         </nav>
 
         <nav className="flex flex-wrap justify-center gap-6 text-muted-foreground font-bold tracking-wider text-sm">
           {secondaryLinks.map((l) => (
-            <Link key={l.label} to={l.to} className="hover:text-primary transition-colors">
+            <a key={l.label} href={l.to} className="hover:text-primary transition-colors">
               {l.label.toUpperCase()}
-            </Link>
+            </a>
           ))}
         </nav>
 
