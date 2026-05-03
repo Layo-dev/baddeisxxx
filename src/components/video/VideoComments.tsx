@@ -26,7 +26,7 @@ const VideoComments = () => {
           onChange={(e) => setName(e.target.value)}
           className="bg-secondary/40 border-border focus-visible:ring-primary"
         />
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        {/*<div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="flex items-center gap-2 rounded-md bg-secondary/40 border border-border px-4 py-2 select-none">
             <span className="font-mono text-lg font-bold text-primary tracking-[0.4em] line-through decoration-primary/40">
               {captcha}
@@ -41,7 +41,7 @@ const VideoComments = () => {
             onChange={(e) => setCode(e.target.value)}
             className="bg-secondary/40 border-border focus-visible:ring-primary sm:max-w-xs"
           />
-        </div>
+        </div>*/}
         <button
           className="inline-flex items-center justify-center rounded-full bg-gradient-purple px-8 py-3 text-sm font-bold uppercase tracking-wider text-white hover:opacity-90 transition-opacity"
         >
