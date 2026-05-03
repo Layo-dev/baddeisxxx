@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Play, Pause, Volume2, VolumeX, Settings, Maximize } from "lucide-react";
+import { Pause, Volume2, VolumeX, Settings, Maximize } from "lucide-react";
+import { PlayIcon, Cog6ToothIcon, SpeakerWaveIcon, SpeakerXMarkIcon, PauseIcon } from "@heroicons/react/24/solid";
 import Hls from "hls.js";
 import { Slider } from "@/components/ui/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -214,7 +215,7 @@ const VideoPlayer = ({ videoUrl, posterUrl, onFirstPlay }: VideoPlayerProps) => 
             />
           )}
           <span className="relative z-10 h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-full bg-gradient-purple grid place-items-center">
-            <Play className="h-5 w-5 sm:h-7 sm:w-7 md:h-9 md:w-9 text-white fill-white ml-1" />
+            <PlayIcon className="h-5 w-5 sm:h-7 sm:w-7 md:h-9 md:w-9 text-white fill-white ml-1" />
           </span>
         </button>
       )}
@@ -229,15 +230,15 @@ const VideoPlayer = ({ videoUrl, posterUrl, onFirstPlay }: VideoPlayerProps) => 
           className="mb-2"
         />
         <div className="flex items-center gap-2 sm:gap-3 text-white text-xs sm:text-sm">
-          <button onClick={toggle} aria-label={playing ? "Pause" : "Play"} className="hover:text-primary transition-colors">
-            {playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+          <button onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
+            {playing ? <PauseIcon className="h-5 w-5" /> : <PlayIcon className="h-5 w-5" />}
           </button>
           <span className="font-mono whitespace-nowrap">
             {formatTime(current)} / {formatTime(duration)}
           </span>
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
-            <button onClick={toggleMute} aria-label="Mute" className="hover:text-primary transition-colors">
-              {muted || volume === 0 ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+            <button onClick={toggleMute} aria-label="Mute">
+              {muted || volume === 0 ? <SpeakerXMarkIcon className="h-5 w-5" /> : <SpeakerWaveIcon className="h-5 w-5" />}
             </button>
             <div className="hidden sm:block w-20">
               <Slider value={[muted ? 0 : volume * 100]} onValueChange={onVol} max={100} step={1} />
@@ -249,7 +250,7 @@ const VideoPlayer = ({ videoUrl, posterUrl, onFirstPlay }: VideoPlayerProps) => 
                     aria-label="Quality settings"
                     className="inline-flex items-center gap-1 hover:text-primary transition-colors"
                   >
-                    <Settings className="h-5 w-5" />
+                    <Cog6ToothIcon className="h-5 w-5" />
                     <span className="hidden sm:inline text-xs font-bold">{qualityLabel}</span>
                   </button>
                 </PopoverTrigger>
@@ -292,11 +293,11 @@ const VideoPlayer = ({ videoUrl, posterUrl, onFirstPlay }: VideoPlayerProps) => 
                 </PopoverContent>
               </Popover>
             ) : (
-              <button aria-label="Settings" className="hover:text-primary transition-colors">
-                <Settings className="h-5 w-5" />
+              <button aria-label="Settings">
+                <Cog6ToothIcon className="h-5 w-5" />
               </button>
             )}
-            <button onClick={fullscreen} aria-label="Fullscreen" className="hover:text-primary transition-colors">
+            <button onClick={fullscreen} aria-label="Fullscreen">
               <Maximize className="h-5 w-5" />
             </button>
           </div>
