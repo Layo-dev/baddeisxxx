@@ -16,6 +16,7 @@ import TermsOfServicePage from "./pages/TermsOfServicePage";
 import Compliance2257Page from "./pages/Compliance2257Page";
 import JuicyPopunder from "./components/JuicyPopunder.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import SearchPage from "./pages/SearchPage.tsx";
 import { AuthProvider } from "./context/AuthContext";
 
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/categories" element={<CategoriesPage />} />
             <Route path="/categories/:slug" element={<CategoryVideosPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/dmca" element={<DmcaPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
