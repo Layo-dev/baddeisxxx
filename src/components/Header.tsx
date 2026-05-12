@@ -11,7 +11,7 @@ const navItems: { label: string; href: string }[] = [
   { label: "Videos", href: "/" },
   { label: "Categories", href: "/categories" },
   { label: "Tags", href: "#" },
-  { label: "Porn Directory", href: "#" },
+  { label: "Porn Pics", href: "#" },
 ];
 
 const Header = () => {
