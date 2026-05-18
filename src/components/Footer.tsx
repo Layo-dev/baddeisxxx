@@ -1,5 +1,6 @@
 /*import { Link } from "react-router-dom";*/ // TODO: Add back in when latest changes are merged
 /*import mascot from "@/assets/baddies-mascot.png";*/ // Deleting soon
+import BannerAd from "@/BannerAd";
 
 const primaryLinks: { label: string; to: string }[] = [
   { label: "Videos", to: "/" },
@@ -18,6 +19,11 @@ const secondaryLinks: { label: string; to: string }[] = [
 const Footer = () => {
   return (
     <footer className="border-t border-primary/15 mt-10">
+      {/* Sponsored ad */}
+      <div className="mt-4 mx-auto flex h-[160px] w-full max-w-sm items-center justify-center rounded-md border border-dashed border-border text-xs uppercase tracking-widest text-muted-foreground">
+        {/*Sponsored · Ad 300×250*/}
+        <BannerAd zoneId="5929334" />
+      </div>
       <div className="container py-10 text-center">
         <p className="max-w-2xl mx-auto text-muted-foreground text-base leading-relaxed">
           Premium curated videos and creators — discover the baddest collection,
