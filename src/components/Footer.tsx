@@ -1,6 +1,6 @@
 /*import { Link } from "react-router-dom";*/ // TODO: Add back in when latest changes are merged
 /*import mascot from "@/assets/baddies-mascot.png";*/ // Deleting soon
-import BannerAd from "@/BannerAd";
+import BannerAd from "@/components/BannerAd";
 
 const primaryLinks: { label: string; to: string }[] = [
   { label: "Videos", to: "/" },
