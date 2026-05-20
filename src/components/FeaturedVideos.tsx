@@ -181,10 +181,10 @@ const FeaturedVideos = () => {
   return (
     <section className="container py-10 sm:py-16">
       {/* Sponsored ad */}
-      <div className=" mb-4 mx-auto flex h-[160px] w-full max-w-sm items-center justify-center rounded-md border border-dashed border-border text-xs uppercase tracking-widest text-muted-foreground">
+      {/*<div className=" mb-4 mx-auto flex h-[160px] w-full max-w-sm items-center justify-center rounded-md border border-dashed border-border text-xs uppercase tracking-widest text-muted-foreground">*/}
         {/*Sponsored · Ad 300×250*/}
         {/*<BannerAd zoneId="5929334" />*/}
-      </div>
+      {/*</div>*/}
       <h2 className="text-center text-4xl sm:text-6xl font-bold text-white tracking-tight">
         FEATURED VIDEOS
       </h2>
